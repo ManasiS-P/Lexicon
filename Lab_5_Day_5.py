@@ -146,7 +146,7 @@ p3 = Product("Phone", 900)
 print(p2 < p1)   
 print(p1 < p3)   
 
-# Sorting works automatically
+# # Sorting works automatically
 products = [p1, p2, p3]
 print(sorted(products))
 
@@ -233,14 +233,15 @@ squared_numbers = [n ** 2 for n in numbers]
 
 print(squared_numbers)  
 
+
 # 13. Create a filtered list comprehension. Make a comprehension that filters elements
 # based on a condition.
 numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-# Keep only even numbers
 even_numbers = [n for n in numbers if n % 2 == 0]
 
-print(even_numbers)  # [2, 4, 6, 8, 10]
+print(even_numbers)  
+
 
 
 # 14. Create a dictionary using a dict comprehension. Use two lists and combine them
@@ -249,10 +250,11 @@ print(even_numbers)  # [2, 4, 6, 8, 10]
 keys = ["name", "age", "city"]
 values = ["Alice", 30, "New York"]
 
-# Combine into a dictionary
 person_dict = {k: v for k, v in zip(keys, values)}
 
 print(person_dict)
+
+
 
 # 15. Build a formatted string using a comprehension. Generate a formatted string
 # from object or dictionary data using comprehension and join().
@@ -263,13 +265,16 @@ person = {
     "city": "New York"
 }
 
-formatted_string = "\n".join(f"{key}: {value}" for key, value in person.items())
+formatted_string = " ".join(f"{key}: {value}" for key, value in person.items())
 
 print(formatted_string)
 
+
+
+
 # 16. Create a nested comprehension. Generate a two-dimensional structure (like a
 # table or grid) with nested comprehensions. 
-# Generate a 5x5 multiplication table
+
 table = [[i * j for j in range(1, 6)] for i in range(1, 6)]
 
 for row in table:
@@ -284,22 +289,22 @@ for row in table:
 x = "global x"
 
 def outer():
-    # Enclosing (outer) scope
+   
     x = "enclosing x"
 
     def inner():
-        nonlocal x  # refers to 'x' in outer()
-        x = "modified enclosing x"  # modifies enclosing variable
+        nonlocal x  
+        x = "modified enclosing x"  
         y = "local y"
         print("Inside inner():")
-        print("x =", x)  # enclosing variable modified
-        print("y =", y)  # local variable
+        print("x =", x)  
+        print("y =", y)  
 
     print("Before calling inner():")
     print("x =", x)
     inner()
     print("After calling inner():")
-    print("x =", x)  # reflects modification by inner()
+    print("x =", x)  
 
 print("Global x before outer():", x)
 outer()
@@ -311,10 +316,6 @@ print("Global x after outer():", x)
 
 class NumberProcessor:
     def __init__(self, numbers):
-        """
-        numbers: list of integers
-        Stores only the squares of even numbers internally.
-        """
         self.processed = [n ** 2 for n in numbers if n % 2 == 0]
 
     def get_processed(self):
@@ -325,21 +326,17 @@ processor = NumberProcessor(numbers)
 
 print(processor.get_processed())
 
+
 # 19. Create a class that builds itself from a dictionary. Write a class that receives a
 # dictionary and turns every key/value pair into attributes. Build __str__ using a
 # comprehension.
 class DynamicObject:
     def __init__(self, data):
-        """
-        data: dictionary
-        Each key/value pair becomes an instance attribute
-        """
         for key, value in data.items():
             setattr(self, key, value)
 
     def __str__(self):
-        # Build formatted string from all attributes
-        return "\n".join(f"{k}: {v}" for k, v in self.__dict__.items())
+        return " ".join(f"{k}: {v}" for k, v in self.__dict__.items())
 
 data = {"name": "Alice", "age": 30, "city": "New York"}
 obj = DynamicObject(data)
