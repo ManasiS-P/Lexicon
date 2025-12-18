@@ -300,5 +300,3 @@ print("Last letter:", last_letter)
 
 
 
-
-
