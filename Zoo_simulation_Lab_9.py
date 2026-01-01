@@ -200,10 +200,129 @@
 # - Handle edge cases gracefully, regardless of interaction order.
 # - Write clean, readable code with clear structure and comments where needed.
 # - Demonstrate deliberate and well-reasoned design choices.
+# class Animal:
+#     def __init__(self, name):
+#         self.name = name
+#         self.energy = 50
+#         self.alive = True
+
+#     def change_energy(self, amount):
+#         self.energy += amount
+#         if self.energy <= 0:
+#             self.energy = 0
+#             self.alive = False
+#             print(self.name, "has no energy left and is exhausted!")
+
+#     def sleep(self):
+#         print(self.name, "is sleeping.")
+#         self.change_energy(+20)
+
+#     def can_act(self):
+#         return self.energy > 10 and self.alive
+
+#     def act(self, zoo):
+#         pass   # to be overridden
+
+# class Herbivore(Animal):
+#     def eat(self):
+#         print(self.name, "eats plants.")
+#         self.change_energy(+15)
+
+#     def play(self, other):
+#         print(self.name, "plays with", other.name)
+#         self.change_energy(-10)
+#         other.change_energy(-10)
+
+#     def act(self, zoo):
+#         if not self.can_act():
+#             self.sleep()
+#             return
+
+#         friend = zoo.find_herbivore(exclude=self)
+#         if friend:
+#             self.play(friend)
+#         else:
+#             self.eat()
+
+# class Carnivore(Animal):
+#     def eat(self):
+#         print(self.name, "eats meat.")
+#         self.change_energy(+20)
+
+#     def hunt(self, prey):
+#         print(self.name, "hunts", prey.name)
+#         self.change_energy(-15)
+#         prey.change_energy(-30)
+
+#     def act(self, zoo):
+#         if not self.can_act():
+#             self.sleep()
+#             return
+
+#         prey = zoo.find_herbivore()
+#         if prey:
+#             self.hunt(prey)
+#         else:
+#             self.sleep()
+
+# class Visitor:
+#     def __init__(self, name):
+#         self.name = name
+
+#     def feed(self, animal):
+#         if animal.alive:
+#             print(self.name, "feeds", animal.name)
+#             animal.eat()
+
+
+# class Zoo:
+#     def __init__(self, animals, visitor):
+#         self.animals = animals
+#         self.visitor = visitor
+#         self.day = 1
+
+#     def find_herbivore(self, exclude=None):
+#         for animal in self.animals:
+#             if isinstance(animal, Herbivore) and animal.alive and animal != exclude:
+#                 return animal
+#         return None
+
+#     def simulate_day(self):
+#         print("\n--- Day", self.day, "at the Zoo ---")
+
+#         for animal in self.animals:
+#             if animal.alive:
+#                 animal.act(self)
+
+#         print("\nVisitor time:")
+#         for animal in self.animals:
+#             self.visitor.feed(animal)
+
+#         print("\nNight time:")
+#         for animal in self.animals:
+#             if animal.alive:
+#                 animal.sleep()
+
+#         self.day += 1
+
+# lion = Carnivore("Leo")
+# tiger = Carnivore("Shera")
+# elephant = Herbivore("Ella")
+# monkey = Herbivore("Momo")
+
+# animals = [lion, tiger, elephant, monkey]
+
+# visitor = Visitor("Bob")
+
+# zoo = Zoo(animals, visitor)
+
+# zoo.simulate_day()
+
+
 class Animal:
     def __init__(self, name):
         self.name = name
-        self.energy = 50
+        self.energy = 30
         self.alive = True
 
     def change_energy(self, amount):
@@ -221,7 +340,8 @@ class Animal:
         return self.energy > 10 and self.alive
 
     def act(self, zoo):
-        pass   # to be overridden
+        pass
+
 
 class Herbivore(Animal):
     def eat(self):
@@ -239,7 +359,7 @@ class Herbivore(Animal):
             return
 
         friend = zoo.find_herbivore(exclude=self)
-        if friend:
+        if friend and self.energy > 20:
             self.play(friend)
         else:
             self.eat()
@@ -259,9 +379,13 @@ class Carnivore(Animal):
             self.sleep()
             return
 
-        prey = zoo.find_herbivore()
-        if prey:
-            self.hunt(prey)
+        # DAY 2 LOGIC: hunt only if hungry
+        if self.energy < 40:
+            prey = zoo.find_herbivore()
+            if prey:
+                self.hunt(prey)
+            else:
+                self.sleep()
         else:
             self.sleep()
 
@@ -273,7 +397,6 @@ class Visitor:
         if animal.alive:
             print(self.name, "feeds", animal.name)
             animal.eat()
-
 
 class Zoo:
     def __init__(self, animals, visitor):
@@ -317,6 +440,9 @@ visitor = Visitor("Bob")
 zoo = Zoo(animals, visitor)
 
 zoo.simulate_day()
+zoo.simulate_day()
+zoo.simulate_day()
+
 
 
 
