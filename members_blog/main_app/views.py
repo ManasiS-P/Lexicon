@@ -1,23 +1,34 @@
-from django.shortcuts import render, redirect
-from basic_app.forms import UserForm, UserProfileInfoForm
-from django.contrib.auth.models import User
-from basic_app.models import UserProfileInfo
+from django.shortcuts import render,redirect
 from django.core.urlresolvers import reverse
+# Create your views here.
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from .models import Post, UserProfileInfo
 from django.http import HttpResponseRedirect,HttpResponse
 from django.contrib.auth import authenticate,login,logout
+from main_app.forms import UserForm, UserProfileInfoForm
+from django.contrib.auth.models import User
+
 
 def index(request):
-    return render(request, 'basic_app/index.html')
+    return render(request, 'main_app/base.html')
 
-@login_required
-def user_logout(request):
-    logout(request)
-    return HttpResponseRedirect(reverse('index'))
+def post_list(request):
+    posts = Post.objects.all().order_by('-created')[:2]
+    return render(request, 'main_app/post_list.html', {'posts': posts})
 
-@login_required
-def special(request):
-    return HttpResponse("You're logged in")
+
+def post_detail(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    comments = None
+    if request.user.is_authenticated():
+        comments = post.comments.all()
+
+    return render(request, 'main_app/post_detail.html', {
+        'post': post,
+        'comments': comments
+    })
 
 def register(request):
 
@@ -36,25 +47,37 @@ def register(request):
             profile.user = user
             profile.save()
 
-            #return redirect('basic_app:profile_preview', user_id=user.id)
+            registered = True
+            return redirect('main_app:profile_preview', user_id=user.id)
+
     else:
         user_form = UserForm()
         profile_form = UserProfileInfoForm()
 
-    return render(request, 'basic_app/registration.html', {
+    return render(request, 'main_app/registration.html', {
         'user_form': user_form,
         'profile_form': profile_form,
         'registered': registered
     })
 
-# def profile_preview(request, user_id):
-#     user = User.objects.get(id=user_id)
-#     profile = UserProfileInfo.objects.get(user=user)
 
-#     return render(request, 'basic_app/profile_preview.html', {
-#         'user': user,
-#         'profile': profile
-#     })
+@login_required
+def profile(request):
+    user = request.user
+    profile = UserProfileInfo.objects.get(user=user)
+    return render(request, 'main_app/profile_preview.html', {
+        'user': user,
+        'profile': profile
+    })
+
+def profile_preview(request, user_id):
+    user = User.objects.get(id=user_id)
+    profile = UserProfileInfo.objects.get(user=user)
+
+    return render(request, 'main_app/profile_preview.html', {
+        'user': user,
+        'profile': profile
+    })
 
 def user_login(request):
     if request.method == 'POST':
@@ -65,7 +88,7 @@ def user_login(request):
         if user:
            if user.is_active:
                login(request,user)
-               return HttpResponseRedirect(reverse('index'))
+               return HttpResponseRedirect(reverse('main_app:post_list'))
            else:
                return HttpResponse("Account not active")
            
@@ -75,4 +98,4 @@ def user_login(request):
             return HttpResponse("Invalid login details supplied!")
         
     else:
-        return render(request,'basic_app/login.html')
+        return render(request,'main_app/login.html')

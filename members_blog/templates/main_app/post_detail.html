@@ -1,0 +1,19 @@
+{% extends "main_app/base.html" %}
+
+{% block body_block %}
+<h2>{{ post.title }}</h2>
+<p>{{ post.body }}</p>
+
+<hr>
+<h4>Comments</h4>
+
+{% if user.is_authenticated %}
+    {% for comment in comments %}
+        <p>{{ comment.body }} — {{ comment.user.username }}</p>
+    {% empty %}
+        <p>No comments.</p>
+    {% endfor %}
+{% else %}
+    <p>Login to view comments.</p>
+{% endif %}
+{% endblock %}

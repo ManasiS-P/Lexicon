@@ -1,0 +1,27 @@
+{% extends "main_app/base.html" %}
+
+{% block body_block %}
+<h1>Employee Profile Preview</h1>
+
+<p><strong>Username:</strong> {{ user.username }}</p>
+<p><strong>Email:</strong> {{ user.email }}</p>
+
+{% if profile.portfolio_site %}
+<p>
+  <strong>Portfolio / LinkedIn:</strong>
+  <a href="{{ profile.portfolio_site }}" target="_blank">
+      {{ profile.portfolio_site }}
+  </a>
+</p>
+{% endif %}
+
+{% if profile.profile_pic %}
+<img src="{{ profile.profile_pic.url }}" alt="Profile Picture" width="200">
+{% endif %}
+
+{% if registered %}
+<p class="alert alert-success mt-3">
+    Welcome! Your account has been created.
+</p>
+{% endif %}
+{% endblock %}

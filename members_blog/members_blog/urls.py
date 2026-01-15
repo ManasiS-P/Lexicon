@@ -1,4 +1,4 @@
-"""learning_users URL Configuration
+"""members_blog URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
@@ -13,22 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from basic_app import views
-from django.conf import settings
-from django.conf.urls.static import static
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
+from main_app import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^admin/', admin.site.urls),
-    url(r'^basic_app/',include('basic_app.urls')),
-    url(r'^logout/$',views.user_logout,name='logout'),
-    url(r'special/',views.special,name='special'),
+    url(r'^', include('main_app.urls')),
+    url(r'^accounts/', include('django.contrib.auth.urls')),
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(
-        settings.MEDIA_URL,
-        document_root=settings.MEDIA_ROOT
-    )
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
