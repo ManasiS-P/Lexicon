@@ -5,13 +5,18 @@
 <div class="jumbotron">
 <form action="{%url 'main_app:user_login' %}" method = 'post'>
 {% csrf_token %}
-<label for="username">Username:</label>
-<input type="text" name="username" placeholder="Enter Username">
-
-<label for="password">Password:</label>
-<input type="password" name="password" placeholder="Enter Username">
-
-<input type="submit" value="login">
+<h1>User Login</h1><br>
+<div class="container">
+    <div class="class=mb-3">
+        <label for="username">Username:</label>
+        <input type="text" name="username" placeholder="Enter Username">
+    </div><br>
+    <div class="class=mb-3">
+        <label for="password">Password:</label>
+        <input type="password" name="password" placeholder="Enter Username">
+    </div><br>
+    <input class="btn btn-primary" type="submit" value="Login">
+</div>
 </form>
 </div>
 {% endblock %} 

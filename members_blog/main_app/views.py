@@ -13,6 +13,11 @@ from django.contrib.auth.models import User
 def index(request):
     return render(request, 'main_app/base.html')
 
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('main_app:post_list'))
+
 def post_list(request):
     posts = Post.objects.all().order_by('-created')[:2]
     return render(request, 'main_app/post_list.html', {'posts': posts})
