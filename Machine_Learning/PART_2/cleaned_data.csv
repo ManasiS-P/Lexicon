@@ -1,0 +1,11 @@
+,id,age,height,weight,income,purchases,gender_female,gender_male,gender_other,gender_unknown,gender_nan
+0,1,25.0,0.5,0.0,0.5,"[23, 45, 12]",False,True,False,False,False
+1,2,35.0,0.7333333333333333,0.09836065573770492,1.0,"[34, 0, 19]",True,False,False,False,False
+2,3,35.0,0.16666666666666666,0.9180327868852459,0.0,[],False,False,False,True,False
+3,4,34.0,0.26666666666666666,0.01639344262295082,0.5816326530612247,"[0, 55, 67]",False,True,False,False,False
+4,5,29.0,1.0,0.7950819672131147,0.21428571428571427,"[12, 19, 23]",True,False,False,False,False
+5,6,42.0,0.4666666666666667,0.11475409836065574,0.6428571428571429,"[40, 41, 42]",False,True,False,False,False
+6,7,35.0,0.4666666666666667,1.0,0.5816326530612247,"[23, 0, 0]",True,False,False,False,False
+7,8,38.0,0.4,0.05737704918032787,0.7857142857142857,"[22, 20]",False,False,False,True,False
+8,9,44.0,0.6666666666666666,0.7540983606557377,0.9285714285714286,[],False,True,False,False,False
+9,10,33.0,0.0,0.5081967213114754,0.5816326530612247,"[14, 13, 12]",False,False,True,False,False
