@@ -85,17 +85,16 @@ DATABASES = {
     }
 }
 
+import os
+
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',
-        'NAME': 'djangodb',
-        'USER': 'Manasi',
-        'PASSWORD': 'Kri$hna@7',
-        'HOST': 'djangodbserver.database.windows.net',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
         'PORT': '1433',
-        'OPTIONS': {
-            'driver': 'ODBC Driver 17 for SQL Server',
-        },
     }
 }
 
