@@ -19,6 +19,7 @@ STATIC_DIR = os.path.join(BASE_DIR,"static")
 
 
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -28,7 +29,7 @@ SECRET_KEY = 'w_^p8+37br*g!em&j4rjhs1_xd7qwd#hh$ubjb-lv-=vf*2osh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['djangoapp.azurewebsites.net']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -123,5 +124,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    STATIC_DIR,
+    os.path.join(BASE_DIR, "static"),  # your existing static folder
 ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # REQUIRED for deployment
